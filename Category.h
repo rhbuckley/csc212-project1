@@ -3,14 +3,9 @@
 #include <string>
 #include <vector>
 
-// This is a rough patch for me because I know that there is a circular
-// import going on between Category & Deliverable, however, if we do not
-// have this circular import, if we entry to grades via student, we will
-// not be able to figure out what Category a deliverable belongs to without
-// going from student to deliverable from deliverable to course from course
-// to categories from categories to deliverable. It is complicated, and I 
-// think we should try to find a better way
-class Deliverable;  // this will be overwritten
+// https://stackoverflow.com/questions/4816698/avoiding-circular-dependencies-of-header-files
+// this is a forward declaration and will be overwritten
+class Deliverable;  
 
 class Category {
     private:

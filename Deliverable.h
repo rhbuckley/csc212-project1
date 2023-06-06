@@ -15,22 +15,23 @@ class Deliverable {
         /** What is the identifying name of the deliverable? */
         std::string deliverableName;
 
-        /** What Grades have students gotten? */
-        std::vector<Grade> grades;
+        /** What Grades has the student gotten? */
+        double grade;
+
+        /** What is the grade out of? */
+        double highestPossibleGrade;
 
     public:
         /** Default Constructor */
         Deliverable(std::string name, Category* category);
+        Deliverable(std::string name, Category* category, double grade);
 
         /** Add Grade */
-        void addGrade(Grade grade);
+        void setGrade(Grade grade);
 
-        /** Remove Grade */
-        void removeGrade(int index);
+        /** Get Grade */
+        double getGrade();
 
-        /** Get Grades */
-        std::vector<Grade*> getGrades();
-
-        /** Get Average Grade */
-        double getAverageGrade();
+        /** Get Percentage */
+        double getPercentage();
 };
