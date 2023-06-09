@@ -46,6 +46,12 @@ class Course {
 
         // Add new deliverable to the course 
         void addDeliverable(Deliverable new_deliv);
+        
+        // Calculate the grade of a category
+        void calcCategoryGrade(std::string category_name);
+    
+        // Calculate the grade of the whole course
+        void calcCourseGrade();
 
         // Returns the name of the course
         std::string getCourseName();
