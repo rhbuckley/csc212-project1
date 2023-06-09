@@ -2,10 +2,17 @@
 #include <vector>
 
 
-//Structure to hold the necessary info for each course deliverable
+// Structure to hold the necessary info for each course deliverable
 struct Deliverable{
     std::string name;
     std::string category;
+    double grade;
+    double out_of;
+};
+
+// Structure to hold necessary information about each course category
+struct Category{
+    std::string name;
     double grade;
     double out_of;
 };
@@ -24,6 +31,10 @@ class Course {
         std::vector<Deliverable> deliv_list;
         // List of category names
         std::vector<std::string> category_list;
+    
+        // Total course grade
+        double grade;
+        double out_of;
 
     public:
 
