@@ -19,9 +19,8 @@ Deliverable::Deliverable(std::string name, Category* category, double grade, dou
 }
 
 /** Add Grade */
-void Deliverable::setGrade(double grade, double out_of){
+void Deliverable::setGrade(double grade){
     this->grade = grade;
-    this->highestPossibleGrade = out_of;
 }
 
 /** Get Grade */
