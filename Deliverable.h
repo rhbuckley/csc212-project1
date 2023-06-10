@@ -24,10 +24,10 @@ class Deliverable {
     public:
         /** Default Constructor */
         Deliverable(std::string name, Category* category);
-        Deliverable(std::string name, Category* category, double grade);
+        Deliverable(std::string name, Category* category, double grade, double out_of);
 
         /** Add Grade */
-        void setGrade(Grade grade);
+        void setGrade(double grade);
 
         /** Get Grade */
         double getGrade();
