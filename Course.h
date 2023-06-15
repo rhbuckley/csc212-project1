@@ -23,7 +23,7 @@ class Course {
         std::vector<Category> categories;
 
     public:
-        /** Default Constructor */
+        /** parametized Constructor */
         Course(std::string name);
 
         /** Parse from String */
