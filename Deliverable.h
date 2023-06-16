@@ -8,30 +8,36 @@
 
 
 class Deliverable {
-    private:
-        /** What kind of deliverable is this? */
-        Category* category;
+private:
+    /** What kind of deliverable is this? */
+    Category* category;
 
-        /** What is the identifying name of the deliverable? */
-        std::string deliverableName;
+    /** What is the identifying name of the deliverable? */
+    std::string deliverableName;
 
-        /** What Grades has the student gotten? */
-        double grade;
+    /** What Grades has the student gotten? */
+    double grade;
 
-        /** What is the grade out of? */
-        double highestPossibleGrade;
+    /** What is the grade out of? */
+    double highestPossibleGrade;
 
-    public:
-        /** Default Constructor */
-        Deliverable(std::string name, Category* category);
-        Deliverable(std::string name, Category* category, double grade, double out_of);
+public:
+    /** Default Constructor */
+    Deliverable(std::string name, Category* category);
+    Deliverable(std::string name, Category* category, double grade, double out_of);
 
-        /** Add Grade */
-        void setGrade(double grade);
+    /** Add Grade */
+    void setGrade(double grade);
 
-        /** Get Grade */
-        double getGrade();
+    /** Get Name */
+    string getName();
 
-        /** Get Percentage */
-        double getPercentage();
+    /** Get Grade */
+    double getGrade();
+
+    /** Get Max Possible Points */
+    double getMaxPts();
+
+    /** Get Percentage */
+    double getPercentage();
 };

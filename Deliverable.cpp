@@ -23,9 +23,17 @@ void Deliverable::setGrade(double grade){
     this->grade = grade;
 }
 
+string Deliverable::getName() {
+    return this->deliverableName;
+}
+
 /** Get Grade */
 double Deliverable::getGrade(){
     return this->grade;
+}
+
+double Deliverable::getMaxPts() {
+    return this->highestPossibleGrade;
 }
 
 /** Get Percentage */

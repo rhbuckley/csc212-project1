@@ -29,6 +29,8 @@ class Course {
         /** Parse from String */
         Course(std::string name, std::string input);
 
+        std::string getName();
+
         /** Get Category */
         Category* getCategory(std::string categoryName);
 
@@ -44,4 +46,9 @@ class Course {
         /** Remove Deliverable */
         void removeDeliverable(int index);
 
+        /** Get grade for the course */
+        string getGrade();
+
+        /** Get grades for one category */
+        string getCategoryGrades(string category);
 };

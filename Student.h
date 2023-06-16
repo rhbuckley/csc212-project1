@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+using namespace std;
 
 #include "Deliverable.h"
 #include "Course.h"
@@ -28,17 +29,26 @@ class Student {
         void addDeliverable(Deliverable *deliverable);
 
         /** Remove Deliverable from Student */
-        void removeDeliverable(int index);
+        void removeDeliverable(Deliverable* deliverable);
 
         /** Add Course for Student */
         void addCourse(Course *course);
 
         /** Remove Course from Student */
-        void removeCourse(int index);
+        void removeCourse(Course* course);
 
-        /** Get Average Grade */
-        double getAverageGrade();
+        /** Gets all assignment grades for given course */
+        string getAllSortedGrades(string course);
 
-        /** Get Grades by Course */
-        std::vector<double> getGradesByCourse(Course *course);
+        /** Gets all category totals for given course */
+        string getCategorySortedGrades(string course);
+
+        /** Gets total grade of given course */
+        string getGradeByCourse(string course);
+
+        /** Gets all grades of one category in given course */
+        string getGradeByCategory(string course, string category);
+
+        /** Gets all grades of all courses */
+        string getAllGrades();
 };

@@ -13,27 +13,56 @@ void Student::addDeliverable(Deliverable *deliverable) {
     deliverables.push_back(deliverable);
 }
 
-void Student::removeDeliverable(int index) {
-    deliverables.erase(deliverables.begin() + index - 1);
+void Student::removeDeliverable(Deliverable* deliverable) {
+    for (int i = 0; i < this->deliverables.size(); i++) {
+        if (this->deliverables[i] == deliverable) {
+            this->deliverables.erase(this->deliverables.begin() + i - 1);
+        }
+    }
 }
 
 void Student::addCourse(Course *course) {
     courses.push_back(course);
 }
 
-void Student::removeCourse(int index) {
-    courses.erase(courses.begin() + index - 1);
-}
-
-double Student::getAverageGrade() {
-    double total_grade = 0;
-    for (int i = 0; i < deliverables.size(); i++) {
-        total_grade += deliverables[i]->getGrade();
+void Student::removeCourse(Course* course) {
+    for (int i = 0; i < this->courses.size(); i++) {
+        if (this->courses[i] == course) {
+            this->courses.erase(this->courses.begin() + i - 1);
+        }
     }
-    double average_grade = total_grade / deliverables.size();
-    return average_grade;
 }
 
-vector<double> Student::getGradesByCourse(Course *course) {
+string Student::getAllSortedGrades(std::string course) {
+
+}
+
+string Student::getCategorySortedGrades(std::string course) {
+
+}
+
+string Student::getGradeByCourse(std::string course) {
+    string course_info = course + ": ";
+    for (int i = 0; i < this->courses.size(); i++) {
+        if (this->courses[i]->getName() == course) {
+            course_info += this->courses[i]->getGrade();
+        }
+        break;
+    }
+    return course_info;
+}
+
+string Student::getGradeByCategory(std::string course, std::string category) {
+    string all_category_info;
+    for (int i = 0; i < this->courses.size(); i++) {
+        if (this->courses[i]->getName() == course) {
+            all_category_info = this->courses[i]->getCategoryGrades(category);
+        }
+        break;
+    }
+    return all_category_info;
+}
+
+string Student::getAllGrades() {
 
 }
