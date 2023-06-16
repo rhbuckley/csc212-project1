@@ -14,7 +14,7 @@ void Category::append(Deliverable *deliverable) {
 
 /** Removes a Deliverable from the Category */
 void Category::remove(Deliverable *deliverable) {
-    // Get Iterator Pointing to Deliverabe
+    // Get Iterator Pointing to Deliverable
     auto it = std::find(deliverables.begin(), deliverables.end(), deliverable);
 
     // If Element was Found...
