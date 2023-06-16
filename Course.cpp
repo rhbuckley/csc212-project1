@@ -8,9 +8,8 @@ Course::Course(std::string name, std::string input){
     //?
 }
 Category* Course::getCategory(std::string categoryName){
-
     for(int i = 0; i < categories.size(); i++){
-        if (categories[i] = categoryName){
+        if (categories[i].categoryName = categoryName){
             return categories[i];
         }
 
