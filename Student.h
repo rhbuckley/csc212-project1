@@ -26,10 +26,10 @@ class Student {
         Student(std::string first_name, std::string last_name);
 
         /** Add Deliverable to Student */
-        void addDeliverable(Deliverable *deliverable);
+        void addDeliverable(Deliverable *deliverable, string course);
 
         /** Remove Deliverable from Student */
-        void removeDeliverable(Deliverable* deliverable);
+        void removeDeliverable(Deliverable* deliverable, string course);
 
         /** Add Course for Student */
         void addCourse(Course *course);

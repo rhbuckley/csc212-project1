@@ -6,11 +6,14 @@
 /** Default Category Constructor -> Gets & Sets a name for Category */
 Category::Category(std::string name) : categoryName(name) {}
 
+std::string Category::getName() {
+    return this->categoryName;
+}
+
 /** Adds a Deliverable to the Category */
 void Category::append(Deliverable *deliverable) {
     deliverables.push_back(deliverable);
 };
-
 
 /** Removes a Deliverable from the Category */
 void Category::remove(Deliverable *deliverable) {

@@ -19,6 +19,9 @@ class Category {
         /** Default Constructor for Category */
         Category(std::string name);
 
+        /** Name getter method */
+        std::string getName();
+
         /** Add a deliverable to given category */
         void append(Deliverable *deliverable);
 

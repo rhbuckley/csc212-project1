@@ -17,13 +17,13 @@ class Course {
         std::string courseName;
 
         /** A vector containing the deliverables for the course */
-        std::vector<Deliverable> deliverables;
+        std::vector<Deliverable*> deliverables;
 
         /** A vector containing the categories of deliverables */
         std::vector<Category> categories;
 
     public:
-        /** parametized Constructor */
+        /** Parameterized Constructor */
         Course(std::string name);
 
         /** Parse from String */
@@ -41,10 +41,10 @@ class Course {
         std::vector<Deliverable*> getAllDeliverables();
 
         /** Add Deliverable */
-        void addDeliverable(Deliverable deliverable);
+        void addDeliverable(Deliverable* deliverable);
 
         /** Remove Deliverable */
-        void removeDeliverable(int index);
+        void removeDeliverable(Deliverable* deliverable);
 
         /** Get grade for the course */
         string getGrade();
