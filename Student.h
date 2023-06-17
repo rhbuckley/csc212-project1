@@ -41,13 +41,13 @@ class Student {
         string getAllSortedGrades(string course);
 
         /** Gets all category totals for given course */
-        string getCategorySortedGrades(string course);
+        string getAllCategoryGrades(string course);
 
         /** Gets total grade of given course */
         string getGradeByCourse(string course);
 
         /** Gets all grades of one category in given course */
-        string getGradeByCategory(string course, string category);
+        string getAssignmentGradesByCategory(string course, string category);
 
         /** Gets all grades of all courses */
         string getAllGrades();

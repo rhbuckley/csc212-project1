@@ -38,7 +38,8 @@ void Student::removeCourse(Course* course) {
         }
     }
 }
-// This  one still needs work but I'm fried and taking a break
+
+// This one still needs work, but I'm fried and taking a break
 string Student::getAllSortedGrades(std::string course) {
     string all_cat_grades;
     // Get all the categories of the course
@@ -59,8 +60,32 @@ string Student::getAllSortedGrades(std::string course) {
     }
 }
 
-string Student::getCategorySortedGrades(std::string course) {
-    string category_sorted_grades;
+string Student::getAllCategoryGrades(std::string course) {
+    // Output string
+    string category_sorted_grades; vector<Deliverable*> deliverables;
+    for (int i = 0; i < this->courses.size(); i++) {
+        Course* current_course = (this->courses[i]);
+        // Search for the appropriate course
+        if (current_course->getName() == course) {
+            // For each category in the course
+            for (int j = 0; j < current_course->getAllCategories().size(); j++) {
+                Category* current_category = (current_course->getAllCategories()[j]);
+                string category_info;
+                // Get that category's deliverables' info
+                deliverables = current_category->getDeliverables();
+                for (int k = 0; k < deliverables.size(); k++) {
+                    string name = deliverables[i]->getName();
+                    string d_pts = std::to_string(deliverables[i]->getGrade());
+                    string d_total = std::to_string(deliverables[i]->getMaxPts());
+                    category_info += name + ": " + d_pts + "/"  + d_total  +  "\n";
+                }
+                category_sorted_grades += category_info;
+            }
+            string course_info = current_course->getGrade();
+            category_sorted_grades += course_info;
+            break;
+        }
+    }
 
     return category_sorted_grades;
 }
@@ -76,7 +101,7 @@ string Student::getGradeByCourse(std::string course) {
     return course_info;
 }
 
-string Student::getGradeByCategory(std::string course, std::string category) {
+string Student::getAssignmentGradesByCategory(std::string course, std::string category) {
     string all_category_info;
     for (int i = 0; i < this->courses.size(); i++) {
         if (this->courses[i]->getName() == course) {

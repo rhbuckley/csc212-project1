@@ -49,6 +49,9 @@ class Course {
         /** Get grade for the course */
         string getGrade();
 
+        /** Get percentage for the course */
+        string getPercentage();
+
         /** Get grades for one category */
         string getCategoryGrades(string category);
 };

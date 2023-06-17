@@ -66,6 +66,18 @@ string Course::getGrade() {
         total_points += total_del_pts;
         earned_points += earned_del_pts;
     }
+    return this->getName() + ": " + std::to_string(earned_points) + "/" + std::to_string(total_points) + "\n";
+}
+
+string Course::getPercentage() {
+    double total_points = 0;
+    double earned_points = 0;
+    for (int i = 0; i < deliverables.size(); i++) {
+        double total_del_pts = deliverables[i]->getMaxPts();
+        double earned_del_pts = deliverables[i]->getGrade();
+        total_points += total_del_pts;
+        earned_points += earned_del_pts;
+    }
     double course_grade = (100 * (earned_points / total_points));
     return std::to_string(course_grade);
 }
