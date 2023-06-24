@@ -1,14 +1,2 @@
 cmake-build-debug
-v0/*
-v0/parse2.cpp
-v0/parse.cpp
-v0/main.cpp
-v0/Interface.cpp
-v0/Gradebook.h
-v0/Gradebook.cpp
-v0/Deliverable.h
-v0/Deliverable.cpp
-v0/Course.h
-v0/Course.cpp
-v0/Category.h
-v0/Category.cpp
+v0
