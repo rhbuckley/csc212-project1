@@ -21,7 +21,7 @@ public:
     std::string getName() { return categoryName; };
 
     /** Add a deliverable to given category */
-    void append(Deliverable deliverable);
+    void append(const Deliverable &deliverable);
 
     /** Remove a deliverable to a given category */
     void remove(Deliverable *deliverable);
@@ -35,4 +35,6 @@ public:
     /** Get Total Percentage for Category */
     double getPercentage();
 
+    /** Serialize */
+    std::vector<std::string> serialize();
 };

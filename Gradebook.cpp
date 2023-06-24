@@ -27,6 +27,7 @@ std::string stripText(std::string txt) {
 
 Gradebook::Gradebook(std::string fileName) {
     // open the file
+    this->fileName = fileName;
     std::ifstream file(fileName);
 
     // could we open the file?
@@ -67,6 +68,9 @@ Gradebook::Gradebook(std::string fileName) {
 
         } // end course
     } // end gradebook
+
+    // close the file
+    file.close();
 }
 
 void Gradebook::appendCourse(Course &course) {
@@ -100,4 +104,34 @@ std::vector<Course *> Gradebook::getCourses() {
 
     // return courses
     return rCourses;
+}
+
+void Gradebook::serialize() {
+    // create a vector of lines
+    std::vector<std::string> lines;
+    lines.emplace_back("BEGIN GRADEBOOK");
+
+    // apply indent to child lines
+    for (Course course : courses)
+        for (const std::string &line : course.serialize())
+            lines.push_back("   " + line);
+
+    // end gradebook
+    lines.emplace_back("END GRADEBOOK");
+
+    // save to a file
+    std::ofstream file(fileName);
+
+    // make sure we can open file
+    if (!file.is_open())
+        throw std::runtime_error("Could not open file .gradebook!");
+
+    // write to output and file
+    for (const std::string &line : lines) {
+        file << line << std::endl;
+        std::cout << line << std::endl;
+    }
+
+    // close the file
+    file.close();
 }

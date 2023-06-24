@@ -93,3 +93,18 @@ double Course::getPercentage() {
     // weight the category
     return unweighted_percent / (double)categories.size();
 }
+
+std::vector<std::string> Course::serialize() {
+    // create vector
+    std::vector<std::string> lines;
+    lines.push_back("BEGIN COURSE \"" + courseName + "\"");
+
+    // again, the const & was clang tidy
+    for (Category category : categories)
+        for (const std::string &line : category.serialize())
+            lines.push_back("   " + line);
+
+    // ending line
+    lines.emplace_back("END COURSE");
+    return lines;
+}

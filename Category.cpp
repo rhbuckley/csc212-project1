@@ -6,7 +6,7 @@
 Category::Category(std::string name) : categoryName(name) {};
 
 
-void Category::append(Deliverable deliverable) {
+void Category::append(const Deliverable &deliverable) {
     deliverables.push_back(deliverable);
 }
 
@@ -33,7 +33,8 @@ std::vector<Deliverable *> Category::getDeliverables() {
     // need to iterate over deliverable vector and return pointers
     std::vector<Deliverable *> rDeliverables;
 
-    // iterate & return memory addresses
+    // iterate & return memory address. we cannot
+    // make this a : loop because it deals with memory
     for (int i = 0 ; i < deliverables.size() ; i++)
         rDeliverables.push_back(&deliverables[i]);
 
@@ -46,8 +47,8 @@ double Category::getTotalPoints() {
     double total = 0;
 
     // iterate over vector and accumulate
-    for (int i = 0 ; i < deliverables.size() ; i++)
-        total += deliverables[i].getGrade();
+    for (Deliverable deliverable : deliverables)
+        total += deliverable.getGrade();
 
     // return total
     return total;
@@ -58,9 +59,26 @@ double Category::getPercentage() {
     double unweighted_percentage = 0;
 
     // iterate over vector and accumulate
-    for (int i = 0 ; i < deliverables.size() ; i++)
-        unweighted_percentage += deliverables[i].getPercentage();
+    for (Deliverable deliverable : deliverables)
+        unweighted_percentage += deliverable.getPercentage();
 
     // return unweighted percentage / num of assignments
     return unweighted_percentage / (double)deliverables.size();
+}
+
+std::vector<std::string> Category::serialize() {
+    // define and initialize lines
+    std::vector<std::string> lines;
+    lines.push_back("BEGIN CATEGORY \"" + categoryName + "\"");
+
+    // add deliverables to lines
+    // we are nesting deliverables.serialize() because it has
+    // no children
+    for (Deliverable deliverable : deliverables)
+        lines.push_back("   " + deliverable.serialize());
+
+    // add ending line (using emplace back because of clion)
+    lines.emplace_back("END CATEGORY");
+
+    return lines;
 }

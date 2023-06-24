@@ -11,6 +11,7 @@
 class Gradebook {
     private:
         std::vector<Course> courses;
+        std::string fileName = ".gradebook";
 
     public:
         /** Just Create a Gradebook instance */
@@ -27,4 +28,7 @@ class Gradebook {
 
         /** Get all courses in the gradebook */
         std::vector<Course*> getCourses();
+
+        /** Save the Gradebook State */
+        void serialize();
 };

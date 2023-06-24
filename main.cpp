@@ -22,4 +22,6 @@ int main() {
             }
         }
     }
+
+    h.serialize();
 }

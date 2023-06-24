@@ -40,4 +40,7 @@ public:
 
     /** Get percentage for the course */
     double getPercentage();
+
+    /** Serialize the Output */
+    std::vector<std::string> serialize();
 };
