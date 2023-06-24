@@ -1,26 +1,25 @@
-#include "Deliverable.h"
-#include "Course.h"
-#include "Student.h"
-#include "Interface.cpp"
+//
+// Created by Richard Buckley on 6/24/23.
+//
+#include "Gradebook.h"
+#include <iostream>
 
 int main() {
+    Gradebook h("/Users/rhbuckley/Documents/College/CSC212/csc212-project1/.gradebook");
+    std::vector<Course *> courses = h.getCourses();
 
-    int task = choose_functionality();
+    for (int i = 0 ; i < courses.size(); i++) {
+        std::cout << "Course: " << courses[i]->getName() << std::endl;
+        std::vector<Category *> categories = courses[i]->getAllCategories();
 
-    // Until end program option is selected
-    while (task != 4) {
-        // If adding a student
-        if (task == 1) {
-            Student student = create_student_profile();
-            // If changing student details
-        } else if (task == 2) {
+        for (int j = 0 ; j < categories.size() ; j++) {
+            std::cout << "Category: " << categories[j]->getName() << std::endl;
+            std::vector<Deliverable *> deliverables = categories[i]->getDeliverables();
 
-            // If getting student grades
-        } else if (task == 3) {
-
-            // Otherwise quit program
-        } else {
-            // break;
+            for (int k = 0 ; k < deliverables.size() ; k++) {
+                std::cout << "Deliverable: " << deliverables[k]->getName();
+                std::cout << " Score: " << deliverables[k]->getPercentage() << "%" << std::endl;
+            }
         }
     }
 }

@@ -1,107 +1,95 @@
-#include <iostream>
+//
+// Created by Richard Buckley on 6/21/23.
+//
+
 #include "Course.h"
 
-Course::Course(std::string name){
-    this-> courseName = name;
+/** Default Constructor **/
+Course::Course(std::string name) : courseName(name) {};
+
+Category *Course::findCategory(std::string categoryName) {
+    // iterate over categories vector
+    for (int i = 0 ; i < categories.size() ; i++)
+        // if the category names match...
+        if (categories[i].getName() == categoryName)
+            // return the category address
+            return &categories[i];
+
+    // return nullptr if nothing is found
+    return nullptr;
 }
 
-Course::Course(std::string name, std::string input){
-    // What was input supposed to signify?
+std::vector<Category *> Course::getAllCategories() {
+    // define temp categories
+    std::vector<Category *> rCategories;
+
+    // iterate through categories
+    for (int i = 0 ; i < categories.size() ; i++)
+        rCategories.push_back(&categories[i]);
+
+    // return temp categories
+    return rCategories;
 }
 
-string Course::getName() {
-    return this->courseName;
-}
+std::vector<Deliverable *> Course::getAllDeliverables() {
+    // define temp deliverables
+    std::vector<Deliverable *> rDeliverables;
 
-Category* Course::getCategory(std::string categoryName){
-    for(int i = 0; i < categories.size(); i++){
-        if (categories[i].categoryName = categoryName){
-            return categories[i];
-        }
-
+    // iterate through categories
+    for (int i = 0 ; i < categories.size() ; i++) {
+        std::vector<Deliverable *> localDeliverables = categories[i].getDeliverables();
+        rDeliverables.insert(rDeliverables.end(), localDeliverables.begin(), localDeliverables.end());
     }
-    //what should this return if the category name does not exist??
+
+    // return the new vector
+    return rDeliverables;
 }
 
-std::vector<Category*> Course::getAllCategories() {
-    vector<Category*> course_cats;
-    for (int i = 0; i < this->categories.size(); i++) {
-        Category* temp = &(this->categories[i]);
-        course_cats.push_back(temp);
-    }
-    return course_cats;
+void Course::addCategory(Category category) {
+    categories.push_back(category);
 }
 
-std::vector<Deliverable*> Course::getAllDeliverables(){
-    vector<Deliverable*> course_dels;
-    for (int i = 0; i < this->deliverables.size(); i++) {
-        Deliverable* temp = this->deliverables[i];
-        course_dels.push_back(temp);
+void Course::removeCategory(Category *category) {
+    // iterate over vector of categories
+    for (int i = 0 ; i < categories.size() ; i++) {
+        if (&categories[i] != category) continue;
+
+        // push focused element to end of vector
+        for (int j = i ; j < categories.size() - 1 ; j++)
+            std::swap(categories[j], categories[j + 1]);
+
+        // remove from vector
+        categories.pop_back();
+
+        return;
     }
-    return course_dels;
 }
 
-void Course::addDeliverable(Deliverable* deliverable){
-    //const Deliverable& deliverable -- would it be best to pass as constant reference since we are
-    // just inserting to our deliverable vector?
-    this->deliverables.push_back(deliverable);
-}
-void Course::removeDeliverable(Deliverable* deliverable){
-    int del_idx = 0;
-    for (int i = 0; i < deliverables.size(); i++) {
-        if (deliverables[i] == deliverable) {
-            del_idx = i;
-            break;
-        }
-    }
-    deliverables.erase(deliverables.begin() + del_idx - 1);
+std::string Course::getGrade() {
+    // get weighted percentage
+    double weighted_percent = getPercentage();
+
+    // determine the grade
+    if (weighted_percent >= 94) return "A";
+    if (weighted_percent >= 90) return "A-";
+    if (weighted_percent >= 87) return "B+";
+    if (weighted_percent >= 83) return "B";
+    if (weighted_percent >= 80) return "B-";
+    if (weighted_percent >= 77) return "C+";
+    if (weighted_percent >= 73) return "C";
+    if (weighted_percent >= 70) return "C-";
+    if (weighted_percent >= 67) return "D+";
+    if (weighted_percent >= 60) return "D";
+    return "F";
 }
 
-string Course::getGrade() {
-    double total_points = 0;
-    double earned_points = 0;
-    for (int i = 0; i < deliverables.size(); i++) {
-        double total_del_pts = deliverables[i]->getMaxPts();
-        double earned_del_pts = deliverables[i]->getGrade();
-        total_points += total_del_pts;
-        earned_points += earned_del_pts;
-    }
-    return this->getName() + ": " + std::to_string(earned_points) + "/" + std::to_string(total_points) + "\n";
-}
+double Course::getPercentage() {
+    double unweighted_percent = 0;
 
-string Course::getPercentage() {
-    double total_points = 0;
-    double earned_points = 0;
-    for (int i = 0; i < deliverables.size(); i++) {
-        double total_del_pts = deliverables[i]->getMaxPts();
-        double earned_del_pts = deliverables[i]->getGrade();
-        total_points += total_del_pts;
-        earned_points += earned_del_pts;
-    }
-    double course_grade = (100 * (earned_points / total_points));
-    return std::to_string(course_grade);
-}
+    // get all category percentages
+    for (int i = 0 ; i < categories.size() ; i++)
+        unweighted_percent += categories[i].getPercentage();
 
-string Course::getCategoryGrades(std::string category) {
-    // All individual assignment info
-    string ind_category_grades;
-    // Totals within the category
-    double cat_earned_pts;
-    double cat_total_pts;
-    for (int i = 0; i < this->deliverables.size(); i++) {
-        // Create a line with name and score/total, add score and total to category sums
-        string d_name = deliverables[i]->getName();
-        cat_earned_pts = deliverables[i]->getGrade();
-        cat_total_pts = deliverables[i]->getMaxPts();
-        string d_grade = std::to_string(deliverables[i]->getGrade());
-        string d_total = std::to_string(deliverables[i]->getMaxPts());
-        string line = d_name + ": " + d_grade + "/" + d_total + "\n";
-        ind_category_grades += line;
-    }
-    // Create final string with assignment grades and total category grade
-    string final_earned = std::to_string(cat_earned_pts);
-    string final_total = std::to_string(cat_total_pts);
-    string cat_totals = category + ": " + final_earned + "/" + final_total + "\n";
-    string all_category_info = ind_category_grades + cat_totals;
-    return all_category_info;
+    // weight the category
+    return unweighted_percent / (double)categories.size();
 }

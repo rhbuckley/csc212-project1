@@ -4,54 +4,40 @@
 #include <vector>
 
 #include "Deliverable.h"
-
-// Again, there is a bit of circular importing going on around here to maintain
-// these complex relationships, but what are you going to do. This declaration
-// is just temporary and will be overwritten in Deliverable.h > Category.h
-class Category;
-
+#include "Category.h"
 
 class Course {
-    private:
-        /** The name for the course */
-        std::string courseName;
+private:
+    /** The name for the course */
+    std::string courseName;
 
-        /** A vector containing the deliverables for the course */
-        std::vector<Deliverable*> deliverables;
+    /** A vector containing the categories of deliverables */
+    std::vector<Category> categories;
 
-        /** A vector containing the categories of deliverables */
-        std::vector<Category> categories;
+public:
+    /** Parameterized Constructor */
+    Course(std::string name);
 
-    public:
-        /** Parameterized Constructor */
-        Course(std::string name);
+    std::string getName() { return courseName; };
 
-        /** Parse from String */
-        Course(std::string name, std::string input);
+    /** Get Category */
+    Category* findCategory(std::string categoryName);
 
-        std::string getName();
+    /** Get all Categories */
+    std::vector<Category*> getAllCategories();
 
-        /** Get Category */
-        Category* getCategory(std::string categoryName);
+    /** Get Deliverables */
+    std::vector<Deliverable*> getAllDeliverables();
 
-        /** Get all Categories */
-        std::vector<Category*> getAllCategories();
+    /** Add Category */
+    void addCategory(Category category);
 
-        /** Get Deliverables */
-        std::vector<Deliverable*> getAllDeliverables();
+    /** Remove Category */
+    void removeCategory(Category *category);
 
-        /** Add Deliverable */
-        void addDeliverable(Deliverable* deliverable);
+    /** Get grade for the course */
+    std::string getGrade();
 
-        /** Remove Deliverable */
-        void removeDeliverable(Deliverable* deliverable);
-
-        /** Get grade for the course */
-        string getGrade();
-
-        /** Get percentage for the course */
-        string getPercentage();
-
-        /** Get grades for one category */
-        string getCategoryGrades(string category);
+    /** Get percentage for the course */
+    double getPercentage();
 };

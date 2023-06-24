@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.24)
 project(csc212_project1)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -6,10 +6,22 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(csc212_project1
+        # Category
         Category.cpp
         Category.h
+
+        # Course
+        Course.cpp
         Course.h
+
+        # Deliverable
         Deliverable.cpp
         Deliverable.h
-        Grade.h
-        Student.h Student.cpp Course.cpp Interface.cpp main.cpp)
+
+        # Gradebook
+        Gradebook.cpp
+        Gradebook.h
+        
+        # Main
+        main.cpp
+)

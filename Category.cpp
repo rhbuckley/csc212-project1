@@ -1,60 +1,66 @@
+#pragma once
+
 #include "Category.h"
-#include "Deliverable.h"
 
-#include <algorithm>
+/** Default Constructor */
+Category::Category(std::string name) : categoryName(name) {};
 
-/** Default Category Constructor -> Gets & Sets a name for Category */
-Category::Category(std::string name) : categoryName(name) {}
 
-std::string Category::getName() {
-    return this->categoryName;
+void Category::append(Deliverable deliverable) {
+    deliverables.push_back(deliverable);
 }
 
-/** Adds a Deliverable to the Category */
-void Category::append(Deliverable *deliverable) {
-    deliverables.push_back(deliverable);
-};
-
-/** Removes a Deliverable from the Category */
 void Category::remove(Deliverable *deliverable) {
-    // Get Iterator Pointing to Deliverable
-    auto it = std::find(deliverables.begin(), deliverables.end(), deliverable);
+    for (int i = 0 ; i < deliverables.size() ; i++) {
+        // check if we found the deliverable to delete
+        if (&deliverables[i] != deliverable) continue;
 
-    // If Element was Found...
-    if (it != deliverables.end()) {
-        
-        // Swap the Iterator of it with the end of the deliverables
-        // using this because I chose to use std::find, which returns
-        // an iterator...
-        std::iter_swap(it, deliverables.end());
+        // we need the deliverable that we want to delete to be at the
+        // end of the vector
+        // O(n^2) worst case
+        for (unsigned int j = i ; j < deliverables.size() - 1 ; j++)
+            std::swap(deliverables[j], deliverables[j + 1]);
 
-        // Remove the Last Element (we just swapped the iterator to the back :0)
+        // now we a delete
         deliverables.pop_back();
+
+        // return because no memory addresses should be the same
+        return;
     }
 }
 
+std::vector<Deliverable *> Category::getDeliverables() {
+    // need to iterate over deliverable vector and return pointers
+    std::vector<Deliverable *> rDeliverables;
 
-/** Get all Deliverables in a given Category */
-std::vector<Deliverable*> Category::getDeliverables() {
-    return deliverables;
+    // iterate & return memory addresses
+    for (int i = 0 ; i < deliverables.size() ; i++)
+        rDeliverables.push_back(&deliverables[i]);
+
+    // return the temp vector
+    return rDeliverables;
 }
 
-/** Get Total Points for Category */
 double Category::getTotalPoints() {
+    // define & set total to 0
     double total = 0;
 
-    for (auto it = deliverables.begin() ; it != deliverables.end() ; ++it)
-        total += (*it)->getGrade();
+    // iterate over vector and accumulate
+    for (int i = 0 ; i < deliverables.size() ; i++)
+        total += deliverables[i].getGrade();
 
+    // return total
     return total;
 }
 
-/** Get Average Percentage for Category */
 double Category::getPercentage() {
-    double total = 0;
+    // define & set total to 0
+    double unweighted_percentage = 0;
 
-    for (auto it = deliverables.begin() ; it != deliverables.end() ; ++it)
-        total += (*it)->getPercentage();
+    // iterate over vector and accumulate
+    for (int i = 0 ; i < deliverables.size() ; i++)
+        unweighted_percentage += deliverables[i].getPercentage();
 
-    return total / (double)deliverables.size();
+    // return unweighted percentage / num of assignments
+    return unweighted_percentage / (double)deliverables.size();
 }

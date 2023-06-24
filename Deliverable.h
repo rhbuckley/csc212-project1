@@ -1,21 +1,15 @@
 #pragma once
 
 #include <string>
-#include <vector>
-
-#include "Category.h"
-#include "Grade.h"
+#include <sstream>
 
 
 class Deliverable {
 private:
-    /** What kind of deliverable is this? */
-    Category* category;
-
     /** What is the identifying name of the deliverable? */
     std::string deliverableName;
 
-    /** What Grades has the student gotten? */
+    /** What Grade has the student gotten? */
     double grade;
 
     /** What is the grade out of? */
@@ -23,21 +17,25 @@ private:
 
 public:
     /** Default Constructor */
-    Deliverable(std::string name, Category* category);
-    Deliverable(std::string name, Category* category, double grade, double out_of);
+    Deliverable(std::string name, double grade, double outOf);
+
+    /** Serialization Functions */
+    Deliverable(std::string fromString);
+    std::string serialize();
 
     /** Add Grade */
     void setGrade(double grade);
+    void setGrade(double grade, double outOf);
 
     /** Get Name */
-    string getName();
+    std::string getName() { return deliverableName; };
 
     /** Get Grade */
-    double getGrade();
+    double getGrade() { return grade; };
 
     /** Get Max Possible Points */
-    double getMaxPts();
+    double getMaxPts() { return highestPossibleGrade; };
 
     /** Get Percentage */
-    double getPercentage();
+    double getPercentage() { return grade / highestPossibleGrade * 100; };
 };
