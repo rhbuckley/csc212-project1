@@ -20,8 +20,8 @@ private:
     void displayCourseMenu(Course* course);
 
     void displayCourseCategories(Course* course);
-    void categoryCreationWiz();
-    void categoryDeletionWiz();
+    void categoryCreationWiz(Course* course);
+    void categoryDeletionWiz(Course* course);
 
     void displayCourseCategoryDeliverables(Category* category);
     void displayDeliverableDetails(Deliverable* deliverable, Category* category);
