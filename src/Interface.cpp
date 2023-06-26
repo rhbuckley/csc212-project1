@@ -43,7 +43,7 @@ Interface::Interface() {
     }
 }
 
-int Interface::drawMenuFromInput(const std::string &msg, std::vector<std::string> menu) {
+int Interface::generate_menu_get_choice(const std::string &msg, std::vector<std::string> menu) {
     // Draw Beginning Line
     for (int i = 0 ; i < 30 ; i++) std::cout << "-";
     std::cout << std::endl;
@@ -71,19 +71,19 @@ int Interface::drawMenuFromInput(const std::string &msg, std::vector<std::string
         // Validate Choice
         if (choice > menu.size() || choice <= 0) {
             std::cout << "Invalid Selection" << std::endl;
-            return drawMenuFromInput(msg, menu);
+            return generate_menu_get_choice(msg, menu);
         }
 
         // Return choice
         return choice;
     } catch (const std::exception &e) {
         std::cout << "Invalid Selection" << std::endl;
-        return drawMenuFromInput(msg, menu);
+        return generate_menu_get_choice(msg, menu);
     }
 
 }
 
-void Interface::displayWelcome() {
+void Interface::interface_entrypoint() {
     std::vector<std::string> menu = {
             "View Classes",
             "Add a Class",
@@ -93,20 +93,20 @@ void Interface::displayWelcome() {
 
     int choice = 0;  // placeholder
     while (choice <= 0 || choice > menu.size())
-        choice = drawMenuFromInput("Welcome", menu);
+        choice = generate_menu_get_choice("Welcome", menu);
 
-    if (choice == 1) return showClassView();
-    if (choice == 2) return classCreationWiz();
-    if (choice == 3) return classDeletionWiz();
+    if (choice == 1) return course_view();
+    if (choice == 2) return course_create();
+    if (choice == 3) return course_delete();
 }
 
-void Interface::showClassView() {
+void Interface::course_view() {
     std::vector<Course*> courses = gb.getCourses();
     std::vector<std::string> courseNames;
 
     if (courses.size() == 0) {
         std::cout << "You aren't registered in any courses" << std::endl;
-        return displayWelcome();
+        return interface_entrypoint();
     }
 
     for (Course *course : courses) {
@@ -125,14 +125,14 @@ void Interface::showClassView() {
 
     courseNames.emplace_back("Exit");
 
-    int choice = drawMenuFromInput("Select a Course to Proceed", courseNames);
-    if (choice != courseNames.size()) return displayCourseMenu(courses[choice - 1]);
+    int choice = generate_menu_get_choice("Select a Course to Proceed", courseNames);
+    if (choice != courseNames.size()) return course_actions(courses[choice - 1]);
 
     // go back to main menu
-    return displayWelcome();
+    return interface_entrypoint();
 }
 
-void Interface::classCreationWiz() {
+void Interface::course_create() {
     std::string className;
 
     std::cout << "Enter Class Name for this course" << std::endl;
@@ -145,19 +145,19 @@ void Interface::classCreationWiz() {
 
     gb.appendCourse(Course(className));
     // we made a change, save it
-    saveFile();
+    save_gradebook();
 
     // go back to main menu
-    return displayWelcome();
+    return interface_entrypoint();
 }
 
-void Interface::classDeletionWiz() {
+void Interface::course_delete() {
     std::vector<Course*> courses = gb.getCourses();
     std::vector<std::string> courseNames;
 
     if (courses.empty()) {
         std::cout << "You aren't registered in any courses" << std::endl;
-        return displayWelcome();
+        return interface_entrypoint();
     }
 
     for (Course *course : courses)
@@ -165,17 +165,17 @@ void Interface::classDeletionWiz() {
 
     courseNames.emplace_back("Cancel");
 
-    int choice = drawMenuFromInput("Select a Course to Delete", courseNames);
+    int choice = generate_menu_get_choice("Select a Course to Delete", courseNames);
 
     if (choice != courseNames.size()) {
         gb.removeCourse(courses[choice - 1]);
-        saveFile();
+        save_gradebook();
         std::cout << "Saved" << std::endl;
     }
-    return displayWelcome();
+    return interface_entrypoint();
 }
 
-void Interface::displayCourseMenu(Course *course) {
+void Interface::course_actions(Course *course) {
     std::vector<std::string> choices = {
             "View Assignment Categories",
             "Add Assignment Category",
@@ -183,16 +183,16 @@ void Interface::displayCourseMenu(Course *course) {
             "Home"
     };
 
-    int choice = drawMenuFromInput("Select an Option to Proceed", choices);
+    int choice = generate_menu_get_choice("Select an Option to Proceed", choices);
 
-    if (choice == 1) return displayCourseCategories(course);
-    if (choice == 2) return categoryCreationWiz(course);
-    if (choice == 3) return categoryDeletionWiz(course);
+    if (choice == 1) return categories_view(course);
+    if (choice == 2) return categories_create(course);
+    if (choice == 3) return categories_delete(course);
 
-    if (choice == 4) return displayWelcome();
+    if (choice == 4) return interface_entrypoint();
 }
 
-void Interface::displayCourseCategories(Course *course){
+void Interface::categories_view(Course *course){
     std::vector<std::string> choices;
 
     for (Category *category : course->getAllCategories())
@@ -200,18 +200,18 @@ void Interface::displayCourseCategories(Course *course){
 
     if (choices.empty()) {
         std::cout << "There are no available categories!" << std::endl;
-        return displayCourseMenu(course);
+        return course_actions(course);
     }
 
     choices.emplace_back("Go Back");
 
-    int choice = drawMenuFromInput("Select a Category to Proceed", choices);
+    int choice = generate_menu_get_choice("Select a Category to Proceed", choices);
 
-    if (choice == choices.size()) return displayCourseMenu(course);
-    return displayCourseCategoryDeliverables(course->getAllCategories()[choice - 1]);
+    if (choice == choices.size()) return course_actions(course);
+    return deliverable_view(course->getAllCategories()[choice - 1]);
 }
 
-void Interface::categoryCreationWiz(Course* course) {
+void Interface::categories_create(Course* course) {
     std::string cat_name;
     std::cout << "Enter name for new category" << std::endl;
     std::cout << "? ";
@@ -219,11 +219,11 @@ void Interface::categoryCreationWiz(Course* course) {
     std::getline(std::cin, cat_name);
 
     course->addCategory(Category(cat_name));
-    saveFile();
-    return displayCourseCategories(course);    
+    save_gradebook();
+    return categories_view(course);
 }
 
-void Interface::categoryDeletionWiz(Course* course) {
+void Interface::categories_delete(Course* course) {
     std::vector<std::string> choices;
 
     for (Category *category : course->getAllCategories())
@@ -231,15 +231,15 @@ void Interface::categoryDeletionWiz(Course* course) {
 
     choices.emplace_back("Go Back");
 
-    int choice = drawMenuFromInput("Delete a Category", choices);
-    if (choice == choices.size() + 1) return displayCourseCategories(course);
+    int choice = generate_menu_get_choice("Delete a Category", choices);
+    if (choice == choices.size() + 1) return categories_view(course);
 
     course->removeCategory(course->getAllCategories()[choice - 1]);
-    saveFile();
-    return displayCourseCategories(course);
+    save_gradebook();
+    return categories_view(course);
 }
 
-void Interface::displayCourseCategoryDeliverables(Category* category){
+void Interface::deliverable_view(Category* category){
     std::vector<std::string> choices;
 
     for (Deliverable *deliverable : category->getDeliverables())
@@ -248,14 +248,14 @@ void Interface::displayCourseCategoryDeliverables(Category* category){
     choices.emplace_back("Add New Deliverable");
     choices.emplace_back("Go Home");
 
-    int choice = drawMenuFromInput("Select a Deliverable to Edit or Delete", choices);
+    int choice = generate_menu_get_choice("Select a Deliverable to Edit or Delete", choices);
 
-    if (choice == choices.size() - 1) return deliverableCreationWiz(category);
-    if (choice == choices.size()) return displayWelcome();
-    return displayDeliverableDetails(category->getDeliverables()[choice - 1], category);
+    if (choice == choices.size() - 1) return deliverable_create(category);
+    if (choice == choices.size()) return interface_entrypoint();
+    return deliverable_actions(category->getDeliverables()[choice - 1], category);
 }
 
-void Interface::deliverableCreationWiz(Category *category) {
+void Interface::deliverable_create(Category *category) {
     std::cout << "Enter a name for the deliverable" << std::endl;
     std::cout << "? ";
     std::string input;
@@ -267,11 +267,11 @@ void Interface::deliverableCreationWiz(Category *category) {
     std::cin >> score >> maxScore;
 
     category->append(Deliverable(input, score, maxScore));
-    saveFile();
-    return displayCourseCategoryDeliverables(category);
+    save_gradebook();
+    return deliverable_view(category);
 }
 
-void Interface::displayDeliverableDetails(Deliverable* deliverable, Category* category) {
+void Interface::deliverable_actions(Deliverable* deliverable, Category* category) {
     std::vector<std::string> choices = {
         "Edit",
         "Delete",
@@ -281,7 +281,7 @@ void Interface::displayDeliverableDetails(Deliverable* deliverable, Category* ca
     std::cout << "Deliverable: " << deliverable->getName() << std::endl;
     std::cout << "Scored: " << deliverable->getGrade() << " / " << deliverable->getMaxPts() << std::endl;
 
-    int choice = drawMenuFromInput("Select Action", choices);
+    int choice = generate_menu_get_choice("Select Action", choices);
 
     // Edit
     if (choice == 1) {
@@ -294,15 +294,15 @@ void Interface::displayDeliverableDetails(Deliverable* deliverable, Category* ca
         }
 
         deliverable->setGrade(grade, outOf);
-        saveFile();
-        return displayDeliverableDetails(deliverable, category);
+        save_gradebook();
+        return deliverable_actions(deliverable, category);
     }
 
     // Delete & Go Back
     else if (choice == 2) {
-        saveFile();
+        save_gradebook();
         category->remove(deliverable);  
     }
     
-    displayCourseCategoryDeliverables(category);
+    deliverable_view(category);
 }

@@ -33,5 +33,10 @@ directory, the program will ask you if you have a save file somewhere else.
 
 We have included some sample save files to test with.
 
+There is only one file that is responsible for collecting user input / output, as if this program were to be used in
+a real world environment, we would not want I/O helper functions in each of the classes. The interface class is made 
+up of a lot of subclasses that really could be separated out into their own files, but keeping all the I/O together is
+somewhat important to me (again this is just a command menu). 
+
 ### Runtime instructions
 ### Sample input/output screenshots with brief explanations of the images used
