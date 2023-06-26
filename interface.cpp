@@ -190,17 +190,64 @@ void Interface::displayCourseMenu(Course *course) {
 }
 
 void Interface::displayCourseCategories(Course *course){
-    std::vector<Category*> category_list = course->getAllCategories();
+    std::vector<std::string> choices;
 
-    for (int i = 0; i < category_list.size(); i++){
-        std::cout << category_list[i]->getName() << std::endl;
-    }
+    for (Category *category : course->getAllCategories())
+        choices.push_back(category->getName());
+    
+    choices.push_back("Go Home");
+
+    int choice = drawMenuFromInput("Select a Category to Proceed", choices);
+
+    if (choice == choices.size() + 1) return displayWelcome();
+    return displayCourseCategoryDeliverables(course->getAllCategories()[choice - 1]);
 }
 
 void Interface::displayCourseCategoryDeliverables(Category* category){
-    std::vector<Deliverable*> deliverable_list = category->getDeliverables();
+    std::vector<std::string> choices;
 
-    for (int i = 0; i < deliverable_list.size(); i++){
-        std::cout << deliverable_list[i]->getName() << std::endl;
+    for (Deliverable *deliverable : category->getDeliverables())
+        choices.push_back(deliverable->getName() + " " + std::to_string(deliverable->getPercentage()));
+
+    choices.push_back("Add New");
+    choices.push_back("Go Home");
+
+    int choice = drawMenuFromInput("Select a Deliverable to Edit or Delete", choices);
+
+    if (choice == choices.size() + 1) return deliverableCreationWiz(category);
+    if (choice == choices.size() + 2) return displayWelcome(); 
+    return displayDeliverableDetails(category->getDeliverables()[choice - 1]);
+}
+
+void Interface::displayDeliverableDetails(Deliverable* deliverable, Category* category) {
+    std::vector<std::string> choices = {
+        "Edit",
+        "Delete",
+        "Back",
+    };
+
+    std::cout << "Deliverable: " << deliverable->getName() << std::endl;
+    std::cout << "Scored: " << deliverable->getGrade() << " / " << deliverable->getMaxPoints() << std::endl;
+
+    int choice = drawMenuFromInput("Select Action", choices);
+
+    // Edit
+    if (choice == 1) {
+        int grade = -1, outOf = -1;
+
+        // todo: add input validation so a char doesn't crash
+        while (grade < 0 && outOf < 0) {
+            std::cout << "Please Enter your New Grade SPACE Out Of Many Points. e.g. (80 100) which would be 80%" << std::endl;
+            std::cin >> grade >> outOf;
+        }
+
+        return displayDeliverableDetails(deliverable, category);
     }
+
+    // Delete & Go Back
+    else if (choice == 2) {
+        category->remove(deliverable);  
+    }
+    
+    displayCourseCategoryDeliverables(category);
 }
