@@ -188,3 +188,11 @@ void Interface::displayCourseMenu(Course *course) {
 
     if (choice == 4) return displayWelcome();
 }
+
+void Interface::displayCourseCategories(Course *course){
+    std::vector<Category*> category_list = course->getAllCategories();
+
+    for (int i = 0; i < category_list.size(); i++){
+        std::cout << category_list[i]->getName() << std::endl;
+    }
+}
