@@ -24,9 +24,7 @@ private:
     void categoryDeletionWiz();
 
     void displayCourseCategoryDeliverables(Category* category);
-    void deliverableCreationWiz();
-    void deliverableDeletionWiz();
-    
+    void displayDeliverableDetails(Deliverable* deliverable, Category* category);
 
 public:
     Interface();
