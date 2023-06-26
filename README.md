@@ -38,5 +38,17 @@ a real world environment, we would not want I/O helper functions in each of the 
 up of a lot of subclasses that really could be separated out into their own files, but keeping all the I/O together is
 somewhat important to me (again this is just a command menu). 
 
+
+### Our Branches
+
+- mvp (minimum viable product)
+    When we started this, we realized we needed a place to save files, so we copy / pasted some of our code and 
+    made this branch so we would have a working product to showcase
+- development (our ideas branch)
+    When we started this project, we did not really consider how we would perform saving user data, and we just came
+    up with ideas, created a relationship chart, and started, however, this was a mistake. After going for a while,
+  (with semi-functional code), we realized that we needed to save this somewhere, and it would be very very hard to
+    save all of the pointer relationships that we had, so we had to scrap some things.
+
 ### Runtime instructions
 ### Sample input/output screenshots with brief explanations of the images used
