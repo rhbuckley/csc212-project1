@@ -1,8 +1,32 @@
 BEGIN GRADEBOOK
-   BEGIN COURSE "COURSE 1a"
-      BEGIN CATEGORY "CATEGORY 1a"
-         ADD DELIVERABLE "ASSIGNMENT 1a" 50.000000 100.000000
-         ADD DELIVERABLE "ASSIGNMENT 2a" 50.000000 100.000000
+   BEGIN COURSE "Algebra 1"
+      BEGIN CATEGORY "Quizzes"
+         ADD DELIVERABLE "Chapter 1 Quiz" 85.0 100.0
+         ADD DELIVERABLE "Chapter 2 Quiz" 90.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Homework"
+         ADD DELIVERABLE "Problem Set 1" 95.0 100.0
+         ADD DELIVERABLE "Problem Set 2" 88.0 100.0
+      END CATEGORY
+   END COURSE
+   BEGIN COURSE "Science"
+      BEGIN CATEGORY "Physics"
+         ADD DELIVERABLE "Motion Experiment" 92.0 100.0
+         ADD DELIVERABLE "Energy Quiz" 88.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Chemistry"
+         ADD DELIVERABLE "Lab Report: Acids and Bases" 78.0 100.0
+         ADD DELIVERABLE "Chemical Equations Test" 90.0 100.0
+      END CATEGORY
+   END COURSE
+   BEGIN COURSE "Language Arts"
+      BEGIN CATEGORY "Writing"
+         ADD DELIVERABLE "Narrative Essay" 85.0 100.0
+         ADD DELIVERABLE "Persuasive Speech" 90.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Literature"
+         ADD DELIVERABLE "Book Review" 92.0 100.0
+         ADD DELIVERABLE "Character Analysis Essay" 88.0 100.0
       END CATEGORY
    END COURSE
 END GRADEBOOK

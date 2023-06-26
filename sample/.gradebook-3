@@ -1,0 +1,22 @@
+BEGIN GRADEBOOK
+   BEGIN COURSE "Physical Education"
+      BEGIN CATEGORY "Fitness"
+         ADD DELIVERABLE "Mile Run" 95.0 100.0
+         ADD DELIVERABLE "Push-up Test" 88.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Sports"
+         ADD DELIVERABLE "Basketball Skills Assessment" 90.0 100.0
+         ADD DELIVERABLE "Soccer Game Performance" 92.0 100.0
+      END CATEGORY
+   END COURSE
+   BEGIN COURSE "Art"
+      BEGIN CATEGORY "Drawing"
+         ADD DELIVERABLE "Still Life Sketch" 85.0 100.0
+         ADD DELIVERABLE "Portrait Painting" 90.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Sculpture"
+         ADD DELIVERABLE "Clay Sculpture Project" 92.0 100.0
+         ADD DELIVERABLE "Wire Sculpture Assignment" 88.0 100.0
+      END CATEGORY
+   END COURSE
+END GRADEBOOK

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Category.h"
 
 /** Default Constructor */

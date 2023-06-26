@@ -45,33 +45,41 @@ Gradebook::Gradebook(std::string fileName) {
     // while there are lines to read...
     while (std::getline(file, line) && stripText(line) != "END GRADEBOOK") {
         // `line` = 'BEGIN GRADEBOOK'
+        if (stripText(line).substr(0, 12) == "BEGIN COURSE") {
+            // `line` = 'BEGIN COURSE "course name"
 
-        while (std::getline(file, line) && stripText(line) != "END COURSE") {
-                // `line` = 'BEGIN COURSE 'temp name' '
-                courses.push_back(Course(betweenQuotes(line)));
+            // create a new course
+            Course newCourse(betweenQuotes(line));
 
-                // we are going to get the next line here.
-                std::getline(file, line);
+            // while we don't see 'END COURSE'
+            while (std::getline(file, line) && stripText(line) != "END COURSE") {
+                // when we see begin category - this might be redundant, but its just
+                // using some consistency, which I like
+                if (stripText(line).substr(0, 14) == "BEGIN CATEGORY") {
+                    // `line` = 'BEGIN CATEGORY'
 
-                // `line` = 'BEGIN CATEGORY 'cate gname' '
-                courses[courses.size() - 1].addCategory(Category(betweenQuotes(line)));
+                    // create a new category
+                    Category newCategory(betweenQuotes(line));
 
-                // get the last category
-                std::vector<Category*> categories = courses[courses.size() - 1].getAllCategories();
-                Category* lastCategory = categories[categories.size() - 1];
+                    while (std::getline(file, line) && stripText(line).substr(0, 3) == "ADD") {
+                        // `lin` = 'ADD DELIVERABLE "deliverable_name" 30 100
+                        newCategory.append(Deliverable(stripText(line)));
+                    } // end deliverable
 
-                // add the assignments
-                while (std::getline(file, line) && stripText(line).substr(0, 3) == "ADD") {
-                    // `line` = 'ADD COURSE 'course_name' 50 100'
-                    lastCategory->append(Deliverable(stripText(line)));
-                } // end deliverable
+                    newCourse.addCategory(newCategory);
 
-        } // end course
-    } // end gradebook
+                } // end category
+            } // end course
+
+            courses.push_back(newCourse);
+
+            } // end course
+        } // end gradebook
 
     // close the file
     file.close();
 }
+
 
 void Gradebook::appendCourse(Course course) {
     courses.push_back(course);
@@ -83,7 +91,7 @@ void Gradebook::removeCourse(Course *course) {
         if (course != &courses[i]) continue;
 
         // if found swap element to delete to back
-        for (int j = i ; i < courses.size() - 1 ; j++)
+        for (int j = i ; j < courses.size() - 1 ; j++)
             std::swap(courses[j], courses[j  + 1]);
 
         // remove the course

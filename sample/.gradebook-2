@@ -1,0 +1,22 @@
+BEGIN GRADEBOOK
+   BEGIN COURSE "Science"
+      BEGIN CATEGORY "Biology"
+         ADD DELIVERABLE "Cell Structure Quiz" 88.0 100.0
+         ADD DELIVERABLE "Lab Report: Photosynthesis" 95.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Chemistry"
+         ADD DELIVERABLE "Periodic Table Test" 90.0 100.0
+         ADD DELIVERABLE "Chemical Reactions Lab" 92.0 100.0
+      END CATEGORY
+   END COURSE
+   BEGIN COURSE "History"
+      BEGIN CATEGORY "American Revolution"
+         ADD DELIVERABLE "Research Paper" 85.0 100.0
+         ADD DELIVERABLE "Revolutionary War Quiz" 90.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Ancient Civilizations"
+         ADD DELIVERABLE "Civilizations Project" 92.0 100.0
+         ADD DELIVERABLE "Civilizations Exam" 88.0 100.0
+      END CATEGORY
+   END COURSE
+END GRADEBOOK

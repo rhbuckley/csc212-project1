@@ -13,7 +13,7 @@ private:
     void displayWelcome();
     void saveFile() { gb.serialize(); };
 
-    int drawMenuFromInput(std::string msg, std::vector<std::string> menu);
+    int drawMenuFromInput(const std::string &msg, std::vector<std::string> menu);
     void showClassView();
     void classCreationWiz();
     void classDeletionWiz();
@@ -23,6 +23,7 @@ private:
     void categoryCreationWiz(Course* course);
     void categoryDeletionWiz(Course* course);
 
+    void deliverableCreationWiz(Category *category);
     void displayCourseCategoryDeliverables(Category* category);
     void displayDeliverableDetails(Deliverable* deliverable, Category* category);
 

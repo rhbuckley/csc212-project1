@@ -1,7 +1,7 @@
 //
 // Created by Richard Buckley on 6/24/23.
 //
-#include "interface.h"
+#include "Interface.h"
 
 int main() {
     Interface anInterface;

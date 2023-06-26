@@ -2,7 +2,7 @@
 // Created by Richard Buckley on 6/25/23.
 //
 
-#include "interface.h"
+#include "Interface.h"
 
 Interface::Interface() {
     std::cout << "Welcome to Gradebook. A CSC 211 project by Richard, Nathaniel, Jack & Monet" << std::endl;
@@ -10,7 +10,7 @@ Interface::Interface() {
     // early check for autosave
     std::ifstream file(path);
     if (file.is_open()) {
-        std::cout << "Autosaved File Found, using last version" << std::endl;
+        std::cout << "Auto saved File Found, using last version" << std::endl;
         std::cout << "File found at ./.gradebook" << std::endl;
         gb = Gradebook(path);
         return;
@@ -43,7 +43,7 @@ Interface::Interface() {
     }
 }
 
-int Interface::drawMenuFromInput(std::string msg, std::vector<std::string> menu) {
+int Interface::drawMenuFromInput(const std::string &msg, std::vector<std::string> menu) {
     // Draw Beginning Line
     for (int i = 0 ; i < 30 ; i++) std::cout << "-";
     std::cout << std::endl;
@@ -115,15 +115,15 @@ void Interface::showClassView() {
         temp = course->getName();
         temp += " - ";
 
-        if (course->getAllDeliverables().size() > 0)
-            temp += std::to_string(course->getPercentage()) + "%";
+        if (!course->getAllDeliverables().empty())
+            temp += std::to_string((int)course->getPercentage()) + "%";
         else
             temp += "NA";
 
         courseNames.push_back(temp);
     }
 
-    courseNames.push_back("Exit");
+    courseNames.emplace_back("Exit");
 
     int choice = drawMenuFromInput("Select a Course to Proceed", courseNames);
     if (choice != courseNames.size()) return displayCourseMenu(courses[choice - 1]);
@@ -136,11 +136,12 @@ void Interface::classCreationWiz() {
     std::string className;
 
     std::cout << "Enter Class Name for this course" << std::endl;
-    std::cout << "? ";
 
     // the name isn't a key so though I don't know why a user may want
     // to name their classes the same, they can
-    std::cin >> className;
+    std::cout << "? ";
+    std::cin.ignore();
+    std::getline(std::cin, className);
 
     gb.appendCourse(Course(className));
     // we made a change, save it
@@ -154,7 +155,7 @@ void Interface::classDeletionWiz() {
     std::vector<Course*> courses = gb.getCourses();
     std::vector<std::string> courseNames;
 
-    if (courses.size() == 0) {
+    if (courses.empty()) {
         std::cout << "You aren't registered in any courses" << std::endl;
         return displayWelcome();
     }
@@ -162,12 +163,14 @@ void Interface::classDeletionWiz() {
     for (Course *course : courses)
         courseNames.push_back(course->getName());
 
-    courseNames.push_back("Cancel");
+    courseNames.emplace_back("Cancel");
 
     int choice = drawMenuFromInput("Select a Course to Delete", courseNames);
+
     if (choice != courseNames.size()) {
         gb.removeCourse(courses[choice - 1]);
         saveFile();
+        std::cout << "Saved" << std::endl;
     }
     return displayWelcome();
 }
@@ -180,11 +183,11 @@ void Interface::displayCourseMenu(Course *course) {
             "Home"
     };
 
-    int choice = drawMenuFromInput("Select a Category to Proceed", choices);
+    int choice = drawMenuFromInput("Select an Option to Proceed", choices);
 
-    if (choice == 1) return displayCourseCategories();
-    if (choice == 2) return categoryCreationWiz();
-    if (choice == 3) return categoryDeletionWiz();
+    if (choice == 1) return displayCourseCategories(course);
+    if (choice == 2) return categoryCreationWiz(course);
+    if (choice == 3) return categoryDeletionWiz(course);
 
     if (choice == 4) return displayWelcome();
 }
@@ -195,24 +198,28 @@ void Interface::displayCourseCategories(Course *course){
     for (Category *category : course->getAllCategories())
         choices.push_back(category->getName());
 
-    choices.push_back("New Category");
-    choices.push_back("Delete Category");
-    choices.push_back("Go Home");
+    if (choices.empty()) {
+        std::cout << "There are no available categories!" << std::endl;
+        return displayCourseMenu(course);
+    }
+
+    choices.emplace_back("Go Back");
 
     int choice = drawMenuFromInput("Select a Category to Proceed", choices);
 
-    if (choice == choices.size() + 1) return categoryCreationWiz(course);
-    if (choice == choices.size() + 2) return categoryDeletionWiz(course);
-    if (choice == choices.size() + 3) return displayWelcome();
+    if (choice == choices.size()) return displayCourseMenu(course);
     return displayCourseCategoryDeliverables(course->getAllCategories()[choice - 1]);
 }
 
 void Interface::categoryCreationWiz(Course* course) {
     std::string cat_name;
     std::cout << "Enter name for new category" << std::endl;
-    std::getline(cat_name, std::cin);
+    std::cout << "? ";
+    std::cin.ignore();
+    std::getline(std::cin, cat_name);
 
     course->addCategory(Category(cat_name));
+    saveFile();
     return displayCourseCategories(course);    
 }
 
@@ -222,12 +229,13 @@ void Interface::categoryDeletionWiz(Course* course) {
     for (Category *category : course->getAllCategories())
         choices.push_back(category->getName());
 
-    choices.push_back("Go Back");
+    choices.emplace_back("Go Back");
 
     int choice = drawMenuFromInput("Delete a Category", choices);
     if (choice == choices.size() + 1) return displayCourseCategories(course);
 
     course->removeCategory(course->getAllCategories()[choice - 1]);
+    saveFile();
     return displayCourseCategories(course);
 }
 
@@ -235,16 +243,32 @@ void Interface::displayCourseCategoryDeliverables(Category* category){
     std::vector<std::string> choices;
 
     for (Deliverable *deliverable : category->getDeliverables())
-        choices.push_back(deliverable->getName() + " " + std::to_string(deliverable->getPercentage()));
+        choices.push_back(deliverable->getName() + " " + std::to_string((int)deliverable->getPercentage()) + "%");
 
-    choices.push_back("Add New");
-    choices.push_back("Go Home");
+    choices.emplace_back("Add New Deliverable");
+    choices.emplace_back("Go Home");
 
     int choice = drawMenuFromInput("Select a Deliverable to Edit or Delete", choices);
 
-    if (choice == choices.size() + 1) return deliverableCreationWiz(category);
-    if (choice == choices.size() + 2) return displayWelcome(); 
-    return displayDeliverableDetails(category->getDeliverables()[choice - 1]);
+    if (choice == choices.size() - 1) return deliverableCreationWiz(category);
+    if (choice == choices.size()) return displayWelcome();
+    return displayDeliverableDetails(category->getDeliverables()[choice - 1], category);
+}
+
+void Interface::deliverableCreationWiz(Category *category) {
+    std::cout << "Enter a name for the deliverable" << std::endl;
+    std::cout << "? ";
+    std::string input;
+    std::cin.ignore();
+    std::getline(std::cin, input);
+
+    double score, maxScore;
+    std::cout << "Enter Your Score and Maximum Possible Score. (e.g. 80 100 would be equivalent to 80%)" << std::endl;
+    std::cin >> score >> maxScore;
+
+    category->append(Deliverable(input, score, maxScore));
+    saveFile();
+    return displayCourseCategoryDeliverables(category);
 }
 
 void Interface::displayDeliverableDetails(Deliverable* deliverable, Category* category) {
@@ -255,7 +279,7 @@ void Interface::displayDeliverableDetails(Deliverable* deliverable, Category* ca
     };
 
     std::cout << "Deliverable: " << deliverable->getName() << std::endl;
-    std::cout << "Scored: " << deliverable->getGrade() << " / " << deliverable->getMaxPoints() << std::endl;
+    std::cout << "Scored: " << deliverable->getGrade() << " / " << deliverable->getMaxPts() << std::endl;
 
     int choice = drawMenuFromInput("Select Action", choices);
 
@@ -269,11 +293,14 @@ void Interface::displayDeliverableDetails(Deliverable* deliverable, Category* ca
             std::cin >> grade >> outOf;
         }
 
+        deliverable->setGrade(grade, outOf);
+        saveFile();
         return displayDeliverableDetails(deliverable, category);
     }
 
     // Delete & Go Back
     else if (choice == 2) {
+        saveFile();
         category->remove(deliverable);  
     }
     

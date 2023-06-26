@@ -7,21 +7,25 @@ include_directories(.)
 
 add_executable(csc212_project1
         # Category
-        Category.cpp
-        Category.h
+        src/Category.cpp
+        src/Category.h
 
         # Course
-        Course.cpp
-        Course.h
+        src/Course.cpp
+        src/Course.h
 
         # Deliverable
-        Deliverable.cpp
-        Deliverable.h
+        src/Deliverable.cpp
+        src/Deliverable.h
 
         # Gradebook
-        Gradebook.cpp
-        Gradebook.h
-        
+        src/Gradebook.cpp
+        src/Gradebook.h
+
+        # Interface
+        src/Interface.cpp
+        src/Interface.h
+
         # Main
-        main.cpp
-        interface.cpp interface.h)
+        src/main.cpp
+        )
