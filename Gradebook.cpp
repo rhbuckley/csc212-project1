@@ -73,7 +73,7 @@ Gradebook::Gradebook(std::string fileName) {
     file.close();
 }
 
-void Gradebook::appendCourse(Course &course) {
+void Gradebook::appendCourse(Course course) {
     courses.push_back(course);
 }
 
@@ -124,12 +124,12 @@ void Gradebook::serialize() {
 
     // make sure we can open file
     if (!file.is_open())
-        throw std::runtime_error("Could not open file .gradebook!");
+        throw std::runtime_error("Could not open file " + fileName + "!");
 
     // write to output and file
     for (const std::string &line : lines) {
         file << line << std::endl;
-        std::cout << line << std::endl;
+//        std::cout << line << std::endl;
     }
 
     // close the file

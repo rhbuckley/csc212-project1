@@ -11,7 +11,7 @@
 class Gradebook {
     private:
         std::vector<Course> courses;
-        std::string fileName = ".gradebook";
+        std::string fileName = "./.gradebook";
 
     public:
         /** Just Create a Gradebook instance */
@@ -21,7 +21,7 @@ class Gradebook {
         Gradebook(std::string fileName);
 
         /** Add a course to the gradebook */
-        void appendCourse(Course &course);
+        void appendCourse(Course course);
 
         /** Remove a course from the gradebook */
         void removeCourse(Course* course);

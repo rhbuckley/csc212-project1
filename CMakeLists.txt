@@ -24,4 +24,4 @@ add_executable(csc212_project1
         
         # Main
         main.cpp
-)
+        interface.cpp interface.h)
