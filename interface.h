@@ -23,7 +23,7 @@ private:
     void categoryCreationWiz();
     void categoryDeletionWiz();
 
-    void displayCourseCategoryDeliverables();
+    void displayCourseCategoryDeliverables(Category* category);
     void deliverableCreationWiz();
     void deliverableDeletionWiz();
     
