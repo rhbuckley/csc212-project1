@@ -196,3 +196,11 @@ void Interface::displayCourseCategories(Course *course){
         std::cout << category_list[i]->getName() << std::endl;
     }
 }
+
+void Interface::displayCourseCategoryDeliverables(Category* category){
+    std::vector<Deliverable*> deliverable_list = category->getDeliverables();
+
+    for (int i = 0; i < deliverable_list.size(); i++){
+        std::cout << deliverable_list[i]->getName() << std::endl;
+    }
+}
