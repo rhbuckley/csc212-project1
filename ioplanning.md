@@ -6,7 +6,7 @@
         - Could be evenly divided in implementation
 
     Cons:
-        - how would we serialize pointers? this feels way to hard
+        - how would we serialize pointers? this feels way too hard
 
 #### Option 2: Use UUIDs (Universally Unique Identifiers)
     Pros: 
