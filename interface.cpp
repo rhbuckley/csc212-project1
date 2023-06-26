@@ -194,13 +194,41 @@ void Interface::displayCourseCategories(Course *course){
 
     for (Category *category : course->getAllCategories())
         choices.push_back(category->getName());
-    
+
+    choices.push_back("New Category");
+    choices.push_back("Delete Category");
     choices.push_back("Go Home");
 
     int choice = drawMenuFromInput("Select a Category to Proceed", choices);
 
-    if (choice == choices.size() + 1) return displayWelcome();
+    if (choice == choices.size() + 1) return categoryCreationWiz(course);
+    if (choice == choices.size() + 2) return categoryDeletionWiz(course);
+    if (choice == choices.size() + 3) return displayWelcome();
     return displayCourseCategoryDeliverables(course->getAllCategories()[choice - 1]);
+}
+
+void Interface::categoryCreationWiz(Course* course) {
+    std::string cat_name;
+    std::cout << "Enter name for new category" << std::endl;
+    std::getline(cat_name, std::cin);
+
+    course->addCategory(Category(cat_name));
+    return displayCourseCategories(course);    
+}
+
+void Interface::categoryDeletionWiz(Course* course) {
+    std::vector<std::string> choices;
+
+    for (Category *category : course->getAllCategories())
+        choices.push_back(category->getName());
+
+    choices.push_back("Go Back");
+
+    int choice = drawMenuFromInput("Delete a Category", choices);
+    if (choice == choices.size() + 1) return displayCourseCategories(course);
+
+    course->removeCategory(course->getAllCategories()[choice - 1]);
+    return displayCourseCategories(course);
 }
 
 void Interface::displayCourseCategoryDeliverables(Category* category){
