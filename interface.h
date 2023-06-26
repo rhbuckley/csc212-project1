@@ -19,7 +19,7 @@ private:
     void classDeletionWiz();
     void displayCourseMenu(Course* course);
 
-    void displayCourseCategories();
+    void displayCourseCategories(Course* course);
     void categoryCreationWiz();
     void categoryDeletionWiz();
 
