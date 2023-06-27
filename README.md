@@ -115,3 +115,4 @@ END GRADEBOOK```
 Taken from: `sample/.gradebook-1`
 
 
+<img width="322" alt="Screenshot 2023-06-26 at 9 41 25 PM" src="https://github.com/rhbuckley/csc212-project1/assets/42151145/90dcca1a-f811-4af7-a5d9-1a05be9b88e9">
