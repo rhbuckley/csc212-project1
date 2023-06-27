@@ -74,4 +74,44 @@ We could have added a CLA as an input for the path, but we decided to make the p
     save all of the pointer relationships that we had, so we had to scrap some things.
 
 ### Runtime instructions
+
+After running the file, you will see a command line interface with options to navigate many different menus to do anything that you may want to do. Keep in mind the 
+structure of the program ... Gradebook > Course > Categories > Deliverable. 
+
 ### Sample input/output screenshots with brief explanations of the images used
+
+To store our data, we used a rudimentarty custom human readable text format. 
+
+This format has three keywords: BEGIN, END & ADD.
+
+BEGIN and END are used for non-deepest classes, while ADD is used for the deepest data (deliverables).
+
+Here is an example
+
+`BEGIN GRADEBOOK
+   BEGIN COURSE "English"
+      BEGIN CATEGORY "Essays"
+         ADD DELIVERABLE "Essay 1" 85.0 100.0
+         ADD DELIVERABLE "Essay 2" 90.0 100.0
+         ADD DELIVERABLE "Essay 3" 80.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Reading"
+         ADD DELIVERABLE "Book Report" 95.0 100.0
+         ADD DELIVERABLE "Comprehension Quiz" 88.0 100.0
+      END CATEGORY
+   END COURSE
+   BEGIN COURSE "Math"
+      BEGIN CATEGORY "Algebra"
+         ADD DELIVERABLE "Chapter 1 Test" 92.0 100.0
+         ADD DELIVERABLE "Chapter 2 Test" 88.0 100.0
+      END CATEGORY
+      BEGIN CATEGORY "Geometry"
+         ADD DELIVERABLE "Proofs Project" 78.0 100.0
+         ADD DELIVERABLE "Triangle Quiz" 90.0 100.0
+      END CATEGORY
+   END COURSE
+END GRADEBOOK`
+
+Taken from: `sample/.gradebook-1`
+
+
