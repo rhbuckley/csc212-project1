@@ -32,7 +32,7 @@ Interface::Interface() {
     // if there is a save file, use the old gradebook, if not...overwrite
     if (saved == 'Y') {
         // check local directory first for save file
-        std::cout << "Please Enter the Absolute Path to Your Save File..." << std::endl;
+        std::cout << "Please Enter the path to Your Save File..." << std::endl;
         std::cin >> path;
 
         gb = Gradebook(path);
