@@ -88,7 +88,7 @@ BEGIN and END are used for non-deepest classes, while ADD is used for the deepes
 
 Here is an example
 
-`BEGIN GRADEBOOK
+BEGIN GRADEBOOK
    BEGIN COURSE "English"
       BEGIN CATEGORY "Essays"
          ADD DELIVERABLE "Essay 1" 85.0 100.0
@@ -110,7 +110,7 @@ Here is an example
          ADD DELIVERABLE "Triangle Quiz" 90.0 100.0
       END CATEGORY
    END COURSE
-END GRADEBOOK`
+END GRADEBOOK
 
 Taken from: `sample/.gradebook-1`
 
