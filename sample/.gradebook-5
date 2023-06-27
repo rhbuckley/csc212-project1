@@ -1,0 +1,54 @@
+BEGIN GRADEBOOK
+   BEGIN COURSE "Calculus"
+      BEGIN CATEGORY "Homework"
+         ADD DELIVERABLE "Homework 1" 10.0 10.0
+         ADD DELIVERABLE "Homework 2" 10.0 10.0
+         ADD DELIVERABLE "Homework 3" 10.0 10.0
+         ADD DELIVERABLE "Homework 4" 10.0 10.0
+         ADD DELIVERABLE "Homework 5" 10.0 10.0
+         ADD DELIVERABLE "Homework 6" 10.0 10.0
+         ADD DELIVERABLE "Homework 7" 10.0 10.0
+         ADD DELIVERABLE "Homework 8" 10.0 10.0
+         ADD DELIVERABLE "Homework 9" 10.0 10.0
+         ADD DELIVERABLE "Homework 10" 10.0 10.0
+      END CATEGORY
+      BEGIN CATEGORY "Quizzes"
+         ADD DELIVERABLE "Quiz 1" 9.0 10.0
+         ADD DELIVERABLE "Quiz 2" 10.0 10.0
+         ADD DELIVERABLE "Quiz 3" 7.0 10.0
+         ADD DELIVERABLE "Quiz 4" 4.0 10.0
+         ADD DELIVERABLE "Quiz 5" 9.0 10.0
+      END CATEGORY
+      BEGIN CATEGORY "Exams"
+         ADD DELIVERABLE "Midterm" 29.0 35.0
+         ADD DELIVERABLE "Final" 31.0 35.0
+      END CATEGORY
+   END COURSE
+   BEGIN COURSE "Physics"
+      BEGIN CATEGORY "Assignments"
+         ADD DELIVERABLE "Assignment 1" 20.0 20.0
+         ADD DELIVERABLE "Assignment 2" 17.0 20.0
+         ADD DELIVERABLE "Assignment 3" 14.0 20.0
+         ADD DELIVERABLE "Assignment 4" 18.0 20.0
+         ADD DELIVERABLE "Assignment 5" 30.0 20.0
+      END CATEGORY
+      BEGIN CATEGORY "Projects"
+         ADD DELIVERABLE "Project 1" 87.0 100.0
+         ADD DELIVERABLE "Project 2" 93.0 100.0
+         ADD DELIVERABLE "Project 3" 92.0 100.0
+      END CATEGORY
+   END COURSE
+   BEGIN COURSE "Music"
+      BEGIN CATEGORY "Compositions"
+         ADD DELIVERABLE "Comp 1" 47.0 50.0
+         ADD DELIVERABLE "Comp 2" 48.0 50.0
+         ADD DELIVERABLE "Comp 3" 48.0 50.0
+      END CATEGORY
+      BEGIN CATEGORY "Reflections"
+         ADD DELIVERABLE "Comp 1 Reflection" 35.0 40.0
+         ADD DELIVERABLE "Comp 2 Reflection" 39.0 40.0
+         ADD DELIVERABLE "Comp 3 Reflection" 38.0 40.0
+         ADD DELIVERABLE "Peer Reflection" 38.0 40.0
+      END CATEGORY
+   END COURSE
+END GRADEBOOK
