@@ -1,0 +1,34 @@
+BEGIN GRADEBOOK
+   BEGIN COURSE "CompSci"
+      BEGIN CATEGORY "Labs"
+         ADD DELIVERABLE "Lab 1" 20.0 20.0
+         ADD DELIVERABLE "Lab 2" 18.0 20.0
+         ADD DELIVERABLE "Lab 3" 19.0 20.0
+         ADD DELIVERABLE "Lab 4" 20.0 20.0
+         ADD DELIVERABLE "Lab 5" 16.0 20.0
+      END CATEGORY
+      BEGIN CATEGORY "Quizzes"
+         ADD DELIVERABLE "Quiz 1" 10.0 10.0
+         ADD DELIVERABLE "Quiz 2" 10.0 10.0
+         ADD DELIVERABLE "Quiz 3" 7.0 10.0
+      END CATEGORY
+      BEGIN CATEGORY "Exams"
+         ADD DELIVERABLE "Midterm" 29.0 35.0
+         ADD DELIVERABLE "Final" 31.0 35.0
+      END CATEGORY
+   END COURSE
+   BEGIN COURSE "Cybersecurity"
+      BEGIN CATEGORY "Assignments"
+         ADD DELIVERABLE "Assignment 1" 20.0 25.0
+         ADD DELIVERABLE "Assignment 2" 25.0 25.0
+         ADD DELIVERABLE "Assignment 3" 19.0 25.0
+         ADD DELIVERABLE "Assignment 4" 18.0 25.0
+      END CATEGORY
+      BEGIN CATEGORY "Projects"
+         ADD DELIVERABLE "Hardware Presentation" 24.5 25.0
+         ADD DELIVERABLE "Firewall Demo" 25.0 25.0
+         ADD DELIVERABLE "Packet Inspection" 20.0 25.0
+         ADD DELIVERABLE "Final Project" 23.0 25.0
+      END CATEGORY
+   END COURSE
+END GRADEBOOK
