@@ -39,7 +39,7 @@ Open your terminal and navigate to the folder where your files are located. Once
 4. Open terminal
 5. Run `cd ~/Downloads/csc212-project1-mvp`
 6. Run `g++ -std=c++11 src/main.cpp src/Interface.cpp src/Gradebook.cpp src/Course.cpp src/Category.cpp src/Deliverable.cpp -o ./gradebookProgram`
-7. Run `./gradebook`
+7. Run `./gradebookProgram`
 8. Done!
 
 This will create an executable file called `gradebookProgram` that will be called at runtime.
